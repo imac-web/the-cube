@@ -30,8 +30,11 @@ export default class Webgl {
     this.cube = new MagicalObject()
     this.scene.add( this.cube );
 
-    this.blob = new Blob()
+    this.blob = new Blob(1, -2)
     this.scene.add( this.blob );
+
+    this.sky = new Blob(4, 0)
+    this.scene.add( this.sky );
 
     this.camera.position.z = 5;
 
@@ -45,6 +48,7 @@ export default class Webgl {
   setGui() {
     this.cube.setGui(webglGuiFolder)
     this.blob.setGui(webglGuiFolder)
+    //this.sky.setGui(webglGuiFolder)
   }
 
   onResize () {
@@ -59,6 +63,7 @@ export default class Webgl {
 
     this.cube.update()
     this.blob.update(this.time)
+    //this.sky.update(this.time)
 
     this.controls.update();
 

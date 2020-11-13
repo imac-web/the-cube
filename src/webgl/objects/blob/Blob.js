@@ -7,8 +7,8 @@ import vertexShader from './vertex.glsl'
 
 
 export default class Blob extends Mesh {
-  constructor() {
-    const geometry = new SphereGeometry(1, 128, 128);
+  constructor(h, x, nom) {
+    const geometry = new SphereGeometry(h, 128, 128);
     // const material = new MeshLambertMaterial({ wireframe: false, color: 0xFF0000 });
     const material = new ShaderMaterial({
       uniforms: {
@@ -21,7 +21,7 @@ export default class Blob extends Mesh {
 
     super(geometry, material);
     
-    this.position.x = -2
+    this.position.x = x
     this.noiseScale = 2
   }
 
