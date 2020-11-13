@@ -4,6 +4,7 @@ import { OrbitControls } from './controls/OrbitControls'
 
 import MagicalObject from './objects/MagicalObject'
 import Blob from './objects/blob/Blob'
+import Sky from './objects/Sky/Sky'
 
 import {webglGuiFolder} from '../utils/gui'
 
@@ -32,6 +33,9 @@ export default class Webgl {
 
     this.blob = new Blob()
     this.scene.add( this.blob );
+
+    this.sky = new Sky()
+    this.scene.add( this.sky );
 
     this.camera.position.z = 5;
 
