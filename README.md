@@ -60,6 +60,6 @@ __/\\\\\\\\\\\__/\\\\____________/\\\\_____/\\\\\\\\\___________/\\\\\\\\\_
 
 # Exo sky sphere
 
-Sur une branche prenom:exo-skyphere
+Sur une branche prenom/exo-skysphere
 Créer une sphere assez grande pour contenir toute la scene
 A l'interieur de cette sphere doit se plaquer un material de type shader material avec un gradient ou autres folies
