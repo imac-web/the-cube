@@ -27,12 +27,18 @@ export default class Webgl {
     this.spotlight.position.set(10, 10, -10)
     this.scene.add(this.spotlight);
     
+//ajouter cube
+
     this.cube = new MagicalObject()
     this.scene.add( this.cube );
-
+//ajouter blob
     this.blob = new Blob()
     this.scene.add( this.blob );
 
+//ajouter sphere    
+    this.boulle = new this.sphere()
+    this.scene.add(this.boulle);
+    
     this.camera.position.z = 5;
 
     this.time = 0
@@ -45,6 +51,7 @@ export default class Webgl {
   setGui() {
     this.cube.setGui(webglGuiFolder)
     this.blob.setGui(webglGuiFolder)
+    this.boulle.setGui(webglGuiFolder)
   }
 
   onResize () {
