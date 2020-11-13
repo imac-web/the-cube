@@ -4,6 +4,7 @@ import { OrbitControls } from './controls/OrbitControls'
 
 import MagicalObject from './objects/MagicalObject'
 import Blob from './objects/blob/Blob'
+import Sphere from './objects/sphere/Sphere'
 
 import {webglGuiFolder} from '../utils/gui'
 
@@ -33,6 +34,9 @@ export default class Webgl {
     this.blob = new Blob()
     this.scene.add( this.blob );
 
+    this.sphere = new Sphere()
+    this.scene.add( this.sphere );
+
     this.camera.position.z = 5;
 
     this.time = 0
@@ -58,6 +62,7 @@ export default class Webgl {
     this.time += 0.01;
 
     this.cube.update()
+    //this.sphere.update()
     this.blob.update(this.time)
 
     this.controls.update();
