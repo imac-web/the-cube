@@ -24,8 +24,22 @@ module.exports = {
           // Compiles Sass to CSS
           'sass-loader',
         ],
+      },
+      //https://github.com/glslify/glslify-loader
+      {
+        test: /\.(glsl|vs|fs|vert|frag)$/,
+        exclude: /node_modules/,
+        use: [
+          'raw-loader',
+          'glslify-loader'
+        ]
       }
     ]
+  },
+  resolve: {
+    alias: {
+      utils: path.resolve(__dirname, 'src/utils/')
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({

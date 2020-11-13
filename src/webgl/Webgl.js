@@ -1,9 +1,9 @@
-dimport { Scene, PerspectiveCamera, WebGLRenderer, Color, AmbientLight, SpotLight } from 'three'
+import { Scene, PerspectiveCamera, WebGLRenderer, Color, AmbientLight, SpotLight } from 'three'
 
 import { OrbitControls } from './controls/OrbitControls'
 
 import MagicalObject from './objects/MagicalObject'
-import Blob from './objects/Blob'
+import Blob from './objects/blob/Blob'
 
 import {webglGuiFolder} from '../utils/gui'
 
@@ -44,6 +44,7 @@ export default class Webgl {
   
   setGui() {
     this.cube.setGui(webglGuiFolder)
+    this.blob.setGui(webglGuiFolder)
   }
 
   onResize () {
