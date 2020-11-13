@@ -1,4 +1,4 @@
-import {ShaderMaterial, SphereGeometry, Mesh} from 'three'
+import {ShaderMaterial, SphereGeometry, Mesh, DoubleSide} from 'three'
 import fragmentShader from './fragment.glsl'
 import vertexShader from './vertex.glsl'
 
@@ -10,7 +10,8 @@ export default class Sky extends Mesh {
 
 		const material = new ShaderMaterial({
 			vertexShader,
-			fragmentShader
+			fragmentShader,
+			side: DoubleSide
 		})
 
 		super(geometry, material)
