@@ -10,24 +10,24 @@ export default class SkySphere extends Mesh {
     const geometry = new SphereGeometry(60, 128, 128);
     const material = new ShaderMaterial({
       uniforms: {
-        color1: { value: new Color(0xFF00FF) },
-        color2: { value: new Color(0x00ffae) }
+        color1: { value: new Color(0x556598) },
+        color2: { value: new Color(0x00ffa4) }
       },
       vertexShader,
       fragmentShader
     });
 
     super(geometry, material);
-    
-    this.position.z = -65
+
+    this.position.z = -62
   }
 
   setGui(gui) {
     const params = {
       scale : 1,
       colors: {
-        primary: '#FF0080',
-        secondary: '#FF0080'
+        primary: '#556598',
+        secondary: '#00ffa4'
       }
     }
     

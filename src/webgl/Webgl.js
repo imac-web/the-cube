@@ -33,6 +33,7 @@ export default class Webgl {
 
     this.blob = new Blob()
     this.scene.add( this.blob );
+    
     this.skySphere = new SkySphere()
     this.scene.add( this.skySphere );
 
