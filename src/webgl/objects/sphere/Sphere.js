@@ -1,5 +1,5 @@
 
-import { SphereGeometry, ShaderMaterial, Mesh, Color } from 'three'
+import { SphereGeometry, ShaderMaterial, Mesh, Color, DoubleSide } from 'three'
 
 import fragmentShader from './fragment.glsl'
 import vertexShader from './vertex.glsl'
@@ -7,17 +7,13 @@ import vertexShader from './vertex.glsl'
 
 export default class Sphere extends Mesh {
   constructor() {
-    const geometry = new SphereGeometry(6, 128, 128);
+    const geometry = new SphereGeometry(15, 128, 128);
     // const material = new MeshLambertMaterial({ wireframe: false, color: 0xFF0000 });
     const material = new ShaderMaterial({
-      uniforms: {
-        color1: { value: new Color(0xFF00FF) },
-        color2: { value: new Color(0x00ffae) }
-      },
       vertexShader,
       fragmentShader
     });
-
+    material.side = DoubleSide;
     super(geometry, material);
     
     //this.position.x = 4
