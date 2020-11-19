@@ -10,7 +10,7 @@ void main() {
   float d = distance(vPosition, normalize(vPosition) * 0.8);
   // vec3 color1 = vec3(1., 0., 1.);
   // vec3 color2 = vec3(0., 0.4, 1.);
-  vec3 finalColor = mix(color1, color2, d);
+  vec3 finalColor = mix(color1, color2, length(vUv));;
 
   gl_FragColor = vec4(finalColor, 1.);
 }
