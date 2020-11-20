@@ -3,7 +3,7 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Color, AmbientLight, SpotLight
 import { OrbitControls } from './controls/OrbitControls'
 
 import MagicalObject from './objects/MagicalObject'
-import Blob from './objects/Blob'
+import Blob from './objects/blob/Blob'
 
 import * as dat from 'dat.gui'
 
@@ -45,26 +45,8 @@ export default class Webgl {
   }
   
   setGui() {
-    const params = {
-      scale : 1,
-      colors: {
-        primary: '#FF0080'
-      }
-    }
-    
-    const magicalObjectFolder = this.gui.addFolder('MagicalObject');
-    magicalObjectFolder.add(this.cube.position, 'x').min(-10).max(10);
-  
-    magicalObjectFolder.add(params, 'scale').min(0).max(1).onChange((value) => {
-      //this.cube.scale(value)
-      this.cube.scale.x = value
-      this.cube.scale.y = value
-      this.cube.scale.z = value
-    })
-    
-    magicalObjectFolder.addColor(params.colors, 'primary').onChange((value) => {
-      this.cube.material.color = new Color(value)
-    })
+    this.cube.setGui(webglGuiFolder)
+    this.blob.setGui(webglGuiFolder)
   }
 
   onResize () {
