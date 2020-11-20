@@ -1,4 +1,5 @@
-import { Scene, PerspectiveCamera, WebGLRenderer, Color, AmbientLight, SpotLight } from 'three'
+import { Scene, PerspectiveCamera, WebGLRenderer, Color, AmbientLight, SpotLight, Clock } from 'three'
+import { GridEffect,BloomEffect,NoiseEffect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
 
 import { OrbitControls } from './controls/OrbitControls'
 
@@ -16,7 +17,12 @@ export default class Webgl {
     this.scene = new Scene()
     this.camera = new PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 )
     // this.camera = new OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 10000 );
-    this.renderer = new WebGLRenderer()
+    this.renderer = new WebGLRenderer({
+      powerPreference: "high-performance",
+      antialias: false,
+      stencil: false,
+      depth: false
+    })
     this.renderer.setSize( window.innerWidth, window.innerHeight );
     $parent.appendChild( this.renderer.domElement );
 
@@ -46,6 +52,21 @@ export default class Webgl {
     this.setGui();
 
     window.addEventListener('resize', this.onResize);
+
+    this.composer = new EffectComposer(this.renderer);
+    this.composer.addPass(new RenderPass(this.scene, this.camera));
+    this.composer.addPass(new EffectPass(this.camera, new GridEffect({})));
+    this.composer.addPass(new EffectPass(this.camera, new BloomEffect({
+      intensity: 10,
+      luminanceThreshold: 0.8
+    })));
+
+    
+    this.composer.addPass(new EffectPass(this.camera, new NoiseEffect()));
+
+
+    this.clock = new Clock();
+
   }
   
   setGui() {
@@ -69,5 +90,7 @@ export default class Webgl {
     this.controls.update();
 
     this.renderer.render( this.scene, this.camera );
+    this.composer.render(this.clock.getDelta());
+
   }
 }
