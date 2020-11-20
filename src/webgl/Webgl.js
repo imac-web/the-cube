@@ -47,8 +47,8 @@ export default class Webgl {
   
   setGui() {
     this.cube.setGui(webglGuiFolder)
-    this.blob.setGui(webglGuiFolder)
-    //this.sky.setGui(webglGuiFolder)
+    this.blob.setGui(webglGuiFolder, 'Blob', 1)
+    this.sky.setGui(webglGuiFolder, 'Sky', 4)
   }
 
   onResize () {
@@ -62,8 +62,8 @@ export default class Webgl {
     this.time += 0.01;
 
     this.cube.update()
-    this.blob.update(this.time)
-    //this.sky.update(this.time)
+    this.blob.update(this.time, 1)
+    this.sky.update(this.time, 4)
 
     this.controls.update();
 
