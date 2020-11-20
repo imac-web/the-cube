@@ -4,6 +4,7 @@ import { OrbitControls } from './controls/OrbitControls'
 
 import MagicalObject from './objects/MagicalObject'
 import Blob from './objects/blob/Blob'
+import SkySphere from './objects/skySphere/SkySphere'
 
 import {webglGuiFolder} from '../utils/gui'
 
@@ -32,6 +33,11 @@ export default class Webgl {
 
     this.blob = new Blob(1, -2)
     this.scene.add( this.blob );
+    this.sky = new SkySphere({
+      colorUp: 0x7ee5fc,
+      colorDown: 0x1844d7
+    })
+    this.scene.add( this.sky );
 
     this.sky = new Blob(4, 0)
     this.scene.add( this.sky );
