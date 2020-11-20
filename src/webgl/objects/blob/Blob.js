@@ -7,7 +7,7 @@ import vertexShader from './vertex.glsl'
 
 
 export default class Blob extends Mesh {
-  constructor(h, x, nom) {
+  constructor(h, x) {
     const geometry = new SphereGeometry(h, 128, 128);
     // const material = new MeshLambertMaterial({ wireframe: false, color: 0xFF0000 });
     const material = new ShaderMaterial({
@@ -25,16 +25,16 @@ export default class Blob extends Mesh {
     this.noiseScale = 2
   }
 
-  setGui(gui) {
+  setGui(gui, name, h) {
     const params = {
-      scale : 1,
+      scale : h,
       colors: {
         primary: '#FF0080',
         secondary: '#FF0080'
       }
     }
     
-    const magicalObjectFolder = gui.addFolder('Blob');
+    const magicalObjectFolder = gui.addFolder(name);
     
     magicalObjectFolder.addColor(params.colors, 'primary').onChange((value) => {
       this.material.uniforms.color1.value = new Color(value)
@@ -44,10 +44,10 @@ export default class Blob extends Mesh {
     })
   }
 
-  update (time) {
+  update (time, h) {
     for (let i = 0; i < this.geometry.vertices.length; i++) {
       const point = this.geometry.vertices[i];
-      point.normalize().multiplyScalar(1 + 0.2 * noise.perlin3(
+      point.normalize().multiplyScalar(h + 0.2 * noise.perlin3(
         point.x * this.noiseScale + time,
         point.y * this.noiseScale + time,
         point.z * this.noiseScale + time
