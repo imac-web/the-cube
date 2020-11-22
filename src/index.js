@@ -2,5 +2,6 @@ import './styles/main.scss';
 
 import Webgl from './webgl/Webgl';
 
-var webgl = new Webgl();
+const $mainCanvas = document.body.querySelector('#maincanvas')
+var webgl = new Webgl($mainCanvas);
 webgl.start();

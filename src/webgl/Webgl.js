@@ -9,7 +9,7 @@ import SkySphere from './objects/skySphere/SkySphere'
 import {webglGuiFolder} from '../utils/gui'
 
 export default class Webgl {
-  constructor() {
+  constructor($parent) {
     this.start = this.start.bind(this)
     this.onResize = this.onResize.bind(this)
 
@@ -18,7 +18,7 @@ export default class Webgl {
     // this.camera = new OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 10000 );
     this.renderer = new WebGLRenderer()
     this.renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( this.renderer.domElement );
+    $parent.appendChild( this.renderer.domElement );
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
