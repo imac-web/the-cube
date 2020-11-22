@@ -1,6 +1,8 @@
 import { Scene, PerspectiveCamera, WebGLRenderer, Color, AmbientLight, SpotLight } from 'three'
 
 import { OrbitControls } from './controls/OrbitControls'
+import { AmmoPhysics } from './physics/AmmoPhysics.js';
+
 
 import MagicalObject from './objects/MagicalObject'
 import Blob from './objects/blob/Blob'
@@ -46,6 +48,15 @@ export default class Webgl {
     this.setGui();
 
     window.addEventListener('resize', this.onResize);
+
+
+    /*
+      USE PHYSICS
+    */
+    AmmoPhysics().then((physics) => {
+      console.log(physics)
+    })
+
   }
   
   setGui() {
