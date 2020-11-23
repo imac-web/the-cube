@@ -6,6 +6,7 @@ import { AmmoPhysics } from './physics/AmmoPhysics.js';
 
 import MagicalObject from './objects/MagicalObject'
 import Blob from './objects/blob/Blob'
+import Floor from './objects/Floor'
 import SkySphere from './objects/skySphere/SkySphere'
 
 import {webglGuiFolder} from '../utils/gui'
@@ -41,6 +42,9 @@ export default class Webgl {
     })
     this.scene.add( this.sky );
 
+    this.floor = new Floor();
+    this.scene.add(this.floor);
+
     this.camera.position.z = 5;
 
     this.time = 0
@@ -55,6 +59,8 @@ export default class Webgl {
     */
     AmmoPhysics().then((physics) => {
       console.log(physics)
+      physics.addMesh(this.floor);
+      physics.addMesh(this.blob, 1);
     })
 
   }
@@ -76,9 +82,17 @@ export default class Webgl {
 
     this.cube.update()
     this.blob.update(this.time)
+    
+    /*
+    AmmoPhysics().then((physics) => {
+      this.blob.position.set( 0, Math.random() + 1, 0 );
+      physics.setMeshPosition( this.blob, this.blob.position, 0 );
+    })
+    */
 
     this.controls.update();
 
     this.renderer.render( this.scene, this.camera );
+   
   }
 }
