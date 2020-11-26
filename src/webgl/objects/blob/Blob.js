@@ -24,6 +24,8 @@ export default class Blob extends Object3D {
 
     this.position.x = -2
     this.noiseScale = 2
+    this.coef = 1
+    this.peakHeight = 0.2
   }
 
   setGui(gui) {
@@ -33,11 +35,14 @@ export default class Blob extends Object3D {
         primary: '#FF0080',
         secondary: '#FF0080'
       },
-      debug: true
+      debug: true,
+      noiseScale: 2, 
+      coef: 1,
+      peakHeight: 0.2
     }
     
     const magicalObjectFolder = gui.addFolder('Blob');
-    
+    const positionFolder = magicalObjectFolder.addFolder('Position')
     magicalObjectFolder.addColor(params.colors, 'primary').onChange((value) => {
       this.mesh.material.uniforms.color1.value = new Color(value)
     })
@@ -48,6 +53,24 @@ export default class Blob extends Object3D {
     magicalObjectFolder.add(params, 'debug').onChange(() => {
       this.canvas.style.display = params.debug ? 'block' : 'none'
     })
+
+    magicalObjectFolder.add(params, 'noiseScale').min(0).max(30).onChange((value) => {
+      this.noiseScale = value
+    })
+    magicalObjectFolder.add(params, 'coef').min(0).max(10).onChange((value) => {
+      this.coef = value
+    })
+    magicalObjectFolder.add(params, 'peakHeight').min(0).max(10).onChange((value) => {
+      this.peakHeight = value
+    })
+    magicalObjectFolder.add(params, 'scale').min(0).max(10).onChange((value) => {
+      this.scale.x = value
+      this.scale.y = value
+      this.scale.z = value
+    })
+    positionFolder.add(this.position, 'x').min(-10).max(10);
+    positionFolder.add(this.position, 'y').min(-10).max(10);
+    positionFolder.add(this.position, 'z').min(-10).max(10);
   }
 
   createCanvas () {
@@ -83,10 +106,10 @@ export default class Blob extends Object3D {
   update (time) {
     for (let i = 0; i < this.mesh.geometry.vertices.length; i++) {
       const point = this.mesh.geometry.vertices[i];
-      point.normalize().multiplyScalar(1 + 0.2 * noise.perlin3(
-        point.x * this.noiseScale + time,
-        point.y * this.noiseScale + time,
-        point.z * this.noiseScale + time
+      point.normalize().multiplyScalar(1 + this.peakHeight * noise.perlin3(
+        point.x * this.noiseScale + (this.coef*time),
+        point.y * this.noiseScale + (this.coef*time),
+        point.z * this.noiseScale + (this.coef*time)
       ))
     }
   
