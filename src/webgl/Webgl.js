@@ -24,7 +24,7 @@ export default class Webgl {
 
     this.light = new AmbientLight( 0x404040, 2 ); // soft white light
     this.scene.add(this.light);
-    this.spotlight = new SpotLight( 0xffffff );
+    this.spotlight = new SpotLight( 0xffffff, 1 );
     this.spotlight.position.set(10, 10, -10)
     this.scene.add(this.spotlight);
     
@@ -49,6 +49,19 @@ export default class Webgl {
   }
   
   setGui() {
+    const SpotLightFolder = webglGuiFolder.addFolder('Spotlight');
+    
+    const SpotLightPositionFolder = SpotLightFolder.addFolder('Position')
+    SpotLightPositionFolder.add(this.spotlight.position, 'x').min(-10).max(10);
+    SpotLightPositionFolder.add(this.spotlight.position, 'y').min(-10).max(10);
+    SpotLightPositionFolder.add(this.spotlight.position, 'z').min(-10).max(10);
+
+    SpotLightFolder.add(this.spotlight, 'intensity').min(0).max(10);
+
+    SpotLightFolder.addColor(this.spotlight, 'color').onChange((value) => {
+      this.spotlight.color.value = new Color(value)
+    })
+
     this.cube.setGui(webglGuiFolder)
     this.blob.setGui(webglGuiFolder)
   }
