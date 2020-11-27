@@ -12,12 +12,30 @@ export default class Blob extends Object3D {
     texture.wrapS = RepeatWrapping
     texture.wrapT = RepeatWrapping
     texture.repeat.set( 1, 1 )
-    
+
+    // const material = new MeshLambertMaterial({ wireframe: false, color: 0xFF0000 });
+    // const material = new ShaderMaterial({
+    //   uniforms: {
+    //     color1: { value: new Color(0xFF00FF) },
+    //     color2: { value: new Color(0x00ffae) }
+    //   },
+    //   vertexShader,
+    //   fragmentShader
+    // });
+
     const material = new MeshPhysicalMaterial({
       // alphaMap: texture,
+      color: 0xFF0080,
+      wireframe: false,
+      roughness: 1,
+      metalness: 0,
+      clearcoat: 1,
       map: texture,
       transparent: false
     })
+  
+    super(geometry, material);
+    
 
     this.mesh = new Mesh(geometry, material)
     this.add(this.mesh)
@@ -33,7 +51,8 @@ export default class Blob extends Object3D {
       scale : 1,
       colors: {
         primary: '#FF0080',
-        secondary: '#FF0080'
+        secondary: '#FF0080',
+        emissive: '#FF0080'
       },
       debug: true,
       noiseScale: 2, 
@@ -41,29 +60,38 @@ export default class Blob extends Object3D {
       peakHeight: 0.2
     }
     
-    const magicalObjectFolder = gui.addFolder('Blob');
-    const positionFolder = magicalObjectFolder.addFolder('Position')
-    magicalObjectFolder.addColor(params.colors, 'primary').onChange((value) => {
-      this.mesh.material.uniforms.color1.value = new Color(value)
-    })
-    magicalObjectFolder.addColor(params.colors, 'secondary').onChange((value) => {
-      this.mesh.material.uniforms.color2.value = new Color(value)
+    const blobGuiFolder = gui.addFolder('Blob');
+    const positionFolder = blobGuiFolder.addFolder('Position')
+    // blobGuiFolder.addColor(params.colors, 'primary').onChange((value) => {
+    //   this.material.uniforms.color1.value = new Color(value)
+    // })
+    // blobGuiFolder.addColor(params.colors, 'secondary').onChange((value) => {
+    //   this.material.uniforms.color2.value = new Color(value)
+    // })
+
+    blobGuiFolder.addColor(params.colors, 'primary').onChange((value) => {
+      this.mesh.material.primary.set(value)
     })
 
-    magicalObjectFolder.add(params, 'debug').onChange(() => {
-      this.canvas.style.display = params.debug ? 'block' : 'none'
+    blobGuiFolder.addColor(params.colors, 'emissive').onChange((value) => {
+      this.mesh.material.emissive.set(value)
     })
+    
+    blobGuiFolder.add(this.mesh.material, "wireframe").listen()
 
-    magicalObjectFolder.add(params, 'noiseScale').min(0).max(30).onChange((value) => {
-      this.noiseScale = value
-    })
-    magicalObjectFolder.add(params, 'coef').min(0).max(10).onChange((value) => {
-      this.coef = value
-    })
-    magicalObjectFolder.add(params, 'peakHeight').min(0).max(10).onChange((value) => {
-      this.peakHeight = value
-    })
-    magicalObjectFolder.add(params, 'scale').min(0).max(10).onChange((value) => {
+    blobGuiFolder.add(this.mesh.material, "roughness").min(0).max(1)
+
+    blobGuiFolder.add(this.mesh.material, "metalness").min(0).max(1)
+
+    blobGuiFolder.add(this.mesh.material, "clearcoat").min(0).max(1)
+
+    blobGuiFolder.add(this, 'noiseScale').min(0).max(30)
+
+    blobGuiFolder.add(this, 'coef').min(0).max(10)
+
+    blobGuiFolder.add(this, 'peakHeight').min(0).max(10)
+
+    blobGuiFolder.add(params, 'scale').min(0).max(10).onChange((value) => {
       this.scale.x = value
       this.scale.y = value
       this.scale.z = value
